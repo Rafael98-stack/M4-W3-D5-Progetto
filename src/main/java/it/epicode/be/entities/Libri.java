@@ -3,12 +3,12 @@ package it.epicode.be.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "libbri")
+@DiscriminatorValue("libri")
+
 public class Libri extends Dettagli{
-    @Id
-    @GeneratedValue
+
     private String autore;
-    @Enumerated(EnumType.STRING)
+
     private Genere genere;
 
     public Libri() {

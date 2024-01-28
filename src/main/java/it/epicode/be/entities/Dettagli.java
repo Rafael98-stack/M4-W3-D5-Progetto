@@ -1,7 +1,21 @@
 package it.epicode.be.entities;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "dettagli")
+@DiscriminatorColumn(name="dettagli")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@NamedQuery(name="findByCodiceISBN", query = "SELECT a FROM Dettagli a WHERE a.codiceISBN = :codiceISBN ")
+@NamedQuery(name="findByTitolo", query = "SELECT a FROM Dettagli a WHERE a.Titolo = :Titolo ")
+@NamedQuery(name = "findByPartialTitolo", query = "SELECT a FROM Dettagli a WHERE LOWER(a.Titolo) LIKE LOWER(CONCAT(:partialTitolo, '%'))")
+@NamedQuery(name="findByAnnoPubblicazione", query = "SELECT a FROM Dettagli a WHERE a.annoPubblicazione = :annoPubblicazione ")
+@NamedQuery(name="findByAutore", query = "SELECT a FROM Libri a WHERE a.autore = :autore ")
 public abstract class Dettagli {
-    private Long codiceISBN;
+    @Id
+    @GeneratedValue
+    protected long id;
+    private long codiceISBN;
     private String Titolo;
     private int annoPubblicazione;
     private int pagine;
@@ -9,7 +23,7 @@ public abstract class Dettagli {
     public Dettagli() {
     }
 
-    public Dettagli(Long codiceISBN, String titolo, int annoPubblicazione, int pagine) {
+    public Dettagli(long codiceISBN, String titolo, int annoPubblicazione, int pagine) {
         this.codiceISBN = codiceISBN;
         Titolo = titolo;
         this.annoPubblicazione = annoPubblicazione;
@@ -51,7 +65,8 @@ public abstract class Dettagli {
     @Override
     public String toString() {
         return "Dettagli{" +
-                "codiceISBN=" + codiceISBN +
+                "id=" + id +
+                ", codiceISBN=" + codiceISBN +
                 ", Titolo='" + Titolo + '\'' +
                 ", annoPubblicazione=" + annoPubblicazione +
                 ", pagine=" + pagine +

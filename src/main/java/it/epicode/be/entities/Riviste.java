@@ -3,11 +3,11 @@ package it.epicode.be.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="riviste")
+@DiscriminatorValue("riviste")
 public class Riviste extends Dettagli{
-    @Id
-    @GeneratedValue
-    @Enumerated(EnumType.STRING)
+//
+//    @GeneratedValue
+//    @Enumerated(EnumType.STRING)
     private Periodicita periodicita;
 
     public Riviste() {
